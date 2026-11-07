@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أبطال تحدي الأسبوع | El Kheta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Great+Vibes&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--g9:#0f4d33;--g7:#1f7a4f;--g5:#3fa573;--g1:#e8f4ec;--gold:#c9a24a;--bg:#fcfdfb;--ink:#17301f;--card:#fff;--line:#dcebe1;--mute:#5d7466;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a13;--ink:#e8f2ea;--card:#14261c;--line:#24402f;--mute:#9bb5a4;--g1:#183024;--g9:#8fd4ae;--g7:#5fc08f}}
+:root[data-theme="dark"]{--bg:#0d1a13;--ink:#e8f2ea;--card:#14261c;--line:#24402f;--mute:#9bb5a4;--g1:#183024;--g9:#8fd4ae;--g7:#5fc08f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,Tahoma,sans-serif;line-height:1.7}
+header{text-align:center;padding:56px 20px 8px}
+.logo{width:76px;height:76px;object-fit:contain;border-radius:18px;background:#fff;padding:6px;box-shadow:0 0 0 1px var(--line)}
+h1{font-size:clamp(30px,6vw,56px);font-weight:800;color:var(--g7);margin:18px 0 0;line-height:1.3}
+.rule{width:120px;height:3px;margin:26px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+main{max-width:1100px;margin:0 auto;padding:36px 20px 20px}
+h2{font-size:clamp(22px,4vw,32px);font-weight:700;text-align:center;margin:0 0 22px}
+.search{display:block;width:min(420px,100%);margin:0 auto 30px;padding:13px 20px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:500 16px Tajawal,sans-serif;text-align:right}
+.search:focus{outline:3px solid var(--g5);border-color:var(--g5)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--ink);font:700 17px Tajawal,sans-serif;text-align:right;cursor:pointer;transition:border-color .15s,transform .15s}
+.card::before{content:"★";color:var(--gold);font-size:15px}
+.card:hover{border-color:var(--g5);transform:translateY(-2px)}
+.card:focus-visible{outline:3px solid var(--g5)}
+.empty{text-align:center;color:var(--mute);margin:20px 0;display:none}
+footer{max-width:640px;margin:40px auto 0;padding:40px 20px 64px;text-align:center;border-top:1px solid var(--line)}
+footer p{margin:0 0 12px;font-size:18px}
+footer .last{font-size:24px;font-weight:800;color:var(--g7)}
+/* modal */
+#ov{position:fixed;inset:0;background:rgba(10,30,20,.7);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:20;padding:16px;overflow:auto}
+#ov.on{display:flex}
+#stage{position:relative;flex:none}
+#stage .cert{position:absolute;top:0;left:0;transform-origin:top left}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{padding:11px 22px;border-radius:999px;border:0;font:700 16px Tajawal,sans-serif;cursor:pointer;background:#fff;color:#0f4d33}
+.btn.p{background:#1f7a4f;color:#fff}
+.btn:focus-visible{outline:3px solid #c9a24a}
+.btn[disabled]{opacity:.6;cursor:wait}
+/* certificate: fixed A4 landscape at 96dpi */
+.cert{width:1123px;height:794px;background:#f6f8fc;color:#0b4a47;font-family:Tajawal,Tahoma,sans-serif;direction:rtl;position:relative;overflow:hidden}
+.cert svg{position:absolute;inset:0;width:1123px;height:794px}
+.cert .a{position:absolute}
+.cert .logo2{left:80px;top:52px;width:60px;height:60px;object-fit:contain}
+.cert .ttl{left:0;right:0;top:140px;font-family:'Aref Ruqaa',Tajawal,serif;font-size:92px;font-weight:700;color:#a9701a;line-height:1.25;direction:rtl;text-align:center}
+.cert .sub{left:0;right:0;top:296px;text-align:center;font-size:24px;font-weight:700;color:#0b4a47}
+.cert .nmw{left:0;right:0;top:332px;text-align:center}
+.cert .nm{display:inline-block;font-family:'Aref Ruqaa',Tajawal,serif;font-weight:700;color:#a9701a;padding:0 60px 4px;border-bottom:3px solid #1f6b66;white-space:nowrap;line-height:1.5;min-width:560px}
+.cert .tx{left:200px;right:200px;top:452px;text-align:center;font-size:22px;line-height:1.8;color:#0b4a47}
+.cert .hero{left:0;right:0;top:520px;text-align:center;font-size:32px;font-weight:800;color:#a9701a}
+.cert .wish{left:0;right:0;top:566px;text-align:center;font-size:21px;color:#0b4a47}
+.cert .ln{top:690px;width:190px;border-top:2px solid #1f6b66}
+.cert .lb.dt{top:654px;font-size:22px}
+.cert .lb.sg{top:690px;font-family:'Great Vibes',cursive;font-size:38px;font-weight:400;white-space:nowrap;line-height:1.4}
+.cert .lb{top:700px;width:190px;text-align:center;font-size:19px;font-weight:700;color:#0b4a47;direction:ltr}
+.cert .medal{left:506px;top:630px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fbe58a,#c8951f);box-shadow:0 4px 10px rgba(0,0,0,.18),inset 0 0 0 4px #efce63;display:flex;align-items:center;justify-content:center}
+.cert .mi{width:78px;height:78px;border-radius:50%;background:#fff;border:3px solid #0e6b5f;display:flex;align-items:center;justify-content:center}
+.cert .mi img{width:58px;height:58px;object-fit:contain}
+.cert .mi i{font-style:normal;font-size:18px}
+#capture{position:fixed;left:-20000px;top:0}
+@media print{
+@page{size:A4 landscape;margin:0}
+body>*:not(#capture){display:none!important}
+#capture{position:static!important;left:0}
+html,body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header>
+<img class="logo" src="data:image/jpeg;base64,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" alt="El Kheta">
+<h1>💚 أبطال تحدي الأسبوع وصلوا 🏆</h1>
+<div class="rule"></div>
+</header>
+<main>
+<h2>🏆 أبطال تحدي الأسبوع</h2>
+<input class="search" id="q" type="search" placeholder="ابحث عن اسمك" aria-label="ابحث عن اسم الطالب" autocomplete="off">
+<div class="grid" id="grid"></div>
+<p class="empty" id="empty">مفيش اسم بالشكل ده، جرّب كتابة تانية</p>
+</main>
+<footer>
+<p>كل واحد فيكم قدر يحول التحدي لإنجاز يستحق الاحتفال 💚</p>
+<p>مبسوطة بالتزامكم، ومستنية أشوف أسماء أكتر تنضم لقائمة الأبطال الأسبوع الجاي 🌱</p>
+<p class="last">يا ترى مين اسمه هيكون في الإعلان الجاي؟ 👀🏆</p>
+</footer>
+
+<div id="ov" role="dialog" aria-modal="true" aria-label="شهادة التقدير">
+<div id="stage"></div>
+<div class="btns">
+<button class="btn p" id="dl">تحميل الشهادة PDF</button>
+<button class="btn" id="pr">طباعة الشهادة</button>
+<button class="btn" id="cl">إغلاق الشهادة</button>
+</div>
+</div>
+<div id="capture" aria-hidden="true"></div>
+
+<script>
+var LOGO=document.querySelector('.logo').src;
+var NAMES=["جودي وليد","باسل محمد","منة رشوان","رحمة عبد الباسط","عبدالرحمن محمد البنا","عبدالرحمن احمد عواد","سما شاهين","نغم رشاد","نادين عبدالتواب","سارة احمد توفيق","شيماء عبدالنبي","جنا خالد","نوران سامح","غني هيثم","مارينا بولس","هنا طه","جومانا حسن","نغم محمد السيد","محمد يوسف","رولان راشد","سنا هشام","هاجر علي","عمر محمد شوقي","لارين احمد","شهد اسامة محمود","شهد اسامة","ديما خالد","اندرو باسم","انس محمد عبدالرحمن","ايلاريا مينا","محمد ايمن منصور","رغدة شعيب","يارا رامي","يارا عرفة","اروي احمد اسامة","اروي فؤاد","يمني ايهاب","عبدالعزيز محمد","احمد عماد الدين","نرمين محمد","اسراء محمد","مريم عبدالناصر","دهب مسعد","منة الله مهني","حنين محمد عبدالرحمن","فريدة ابراهيم","سلمي ممدوح","جودي جمعة","جني وليد","حبيبة امام جاد","همسة احمد","حبيبة صبحي","اسراء سامي","نادين عمرو","زيد محمد","عمرو رامي","رقية حسام","جني حسين","حبيبة فتح الله","نادين صلاح","محمد طارق","رنا عاشور","مريم اكرم محمد","سيف صلاح","لمار مهران","ملك اكرم","روفانا بهاء","لينا وليد"];
+// حقل النوع لكل طالب: m = ذكر، f = أنثى (راجعيه لو في اسم محتاج تعديل)
+var MALE=[2,5,6,19,23,28,29,31,38,39,55,56,61,64];
+var S=NAMES.map(function(n,i){return{id:i+1,name:n,g:MALE.indexOf(i+1)>-1?'m':'f'}});
+
+var CORNER='<path d="M640 0H1123V330C1040 335 950 320 890 262C850 222 830 190 790 135C760 92 712 40 640 0Z" fill="url(#tg)"/><path d="M905 0H1123V200C1070 150 990 140 940 90C920 65 908 30 905 0Z" fill="#08403f" opacity=".7"/><path d="M672 0L748 0C765 30 780 70 792 130C760 80 720 40 672 0Z" fill="url(#gg)"/><path d="M965 262C1030 250 1090 205 1123 190V212C1080 232 1030 264 965 262Z" fill="url(#gg)"/><path d="M840 0C870 80 860 200 900 262C950 330 1050 330 1123 322" fill="none" stroke="#d4a62a" stroke-width="2.5"/><path d="M905 0C890 60 930 150 1010 200C1060 205 1100 175 1123 165" fill="none" stroke="#d4a62a" stroke-width="2.5"/>';
+var WAVES='';for(var i=0;i<16;i++){WAVES+='<path d="M0 '+(400+i*7)+'C250 '+(300+i*9)+' 450 '+(560+i*5)+' 700 '+(450+i*6)+'S1000 '+(380+i*7)+' 1123 '+(420+i*6)+'" fill="none" stroke="#aab6cc" stroke-width=".8" opacity=".45"/>'}
+var BG='<svg viewBox="0 0 1123 794" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="tg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0e6b5f"/><stop offset="1" stop-color="#052f33"/></linearGradient><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc78"/><stop offset=".5" stop-color="#b98418"/><stop offset="1" stop-color="#f3d36a"/></linearGradient><linearGradient id="bgc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8f9fd"/><stop offset="1" stop-color="#edf0f8"/></linearGradient></defs><rect width="1123" height="794" fill="url(#bgc)"/><ellipse cx="240" cy="590" rx="400" ry="230" fill="#e1e6f1" opacity=".6"/><ellipse cx="980" cy="480" rx="200" ry="330" fill="#dce2ee" opacity=".65"/>'+WAVES+CORNER+'<g transform="rotate(180 561.5 397)">'+CORNER+'</g></svg>';
+function certHTML(s){
+var h=s.g==='m'?'ه':'ها';
+var fs=s.name.length>20?56:s.name.length>16?64:74;
+return BG+
+'<img class="a logo2" src="'+LOGO+'" alt="">'+
+'<div class="a ttl">شهادة تقدير 🏆</div>'+
+'<div class="a sub">تُقدَّم هذه الشهادة إلى</div>'+
+'<div class="a nmw"><span class="nm" style="font-size:'+fs+'px">'+s.name+'</span></div>'+
+'<div class="a tx">تقديرًا لالتزام'+h+' بالتحدي الأسبوعي، وحرص'+h+' على تحقيق الهدف المطلوب، وتحويل التحدي إلى إنجاز يستحق الاحتفال.</div>'+
+'<div class="a hero">أنت من أبطال تحدي الأسبوع!</div>'+
+'<div class="a wish">مع تمنياتنا بمزيد من الإنجازات والنجاحات 💚</div>'+
+'<div class="a ln" style="left:300px"></div><div class="a lb dt" style="left:300px">التاريخ</div><div class="a lb" style="left:300px;font-size:22px">7/11/2026</div>'+
+'<div class="a medal"><div class="mi"><img src="'+LOGO+'" alt=""></div></div>'+
+'<div class="a ln" style="left:640px"></div><div class="a lb dt" style="left:640px">التوقيع</div><div class="a lb sg" style="left:605px;width:260px">Ms Sarah Mohamed</div>';
+}
+function mk(s){var d=document.createElement('div');d.className='cert';d.innerHTML=certHTML(s);return d}
+
+var grid=document.getElementById('grid'),q=document.getElementById('q'),empty=document.getElementById('empty');
+S.forEach(function(s){
+var b=document.createElement('button');b.className='card';b.type='button';b.textContent=s.name;b.dataset.id=s.id;
+b.addEventListener('click',function(){openCert(s)});grid.appendChild(b);
+});
+function norm(t){return t.replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/[ىي]/g,'ي').replace(/[\u064B-\u0652]/g,'').trim().toLowerCase()}
+q.addEventListener('input',function(){
+var v=norm(q.value),n=0;
+Array.prototype.forEach.call(grid.children,function(c){var ok=norm(c.textContent).indexOf(v)>-1;c.style.display=ok?'':'none';if(ok)n++});
+empty.style.display=n?'none':'block';
+});
+
+var ov=document.getElementById('ov'),stage=document.getElementById('stage'),cap=document.getElementById('capture'),cur=null,last=null;
+function fit(){
+var c=stage.firstChild;if(!c)return;
+var s=Math.min((innerWidth-32)/1123,(innerHeight-140)/794);
+c.style.transform='scale('+s+')';stage.style.width=1123*s+'px';stage.style.height=794*s+'px';
+}
+function openCert(s){
+cur=s;last=document.activeElement;
+stage.innerHTML='';stage.appendChild(mk(s));
+cap.innerHTML='';cap.appendChild(mk(s));
+ov.classList.add('on');fit();document.getElementById('cl').focus();
+}
+function closeCert(){ov.classList.remove('on');if(last)last.focus()}
+document.getElementById('cl').onclick=closeCert;
+ov.addEventListener('click',function(e){if(e.target===ov)closeCert()});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('on'))closeCert()});
+addEventListener('resize',fit);
+document.getElementById('pr').onclick=function(){document.fonts.ready.then(function(){window.print()})};
+document.getElementById('dl').onclick=function(){
+var b=this;if(!cur)return;b.disabled=true;var old=b.textContent;b.textContent='جاري التحضير...';
+document.fonts.ready.then(function(){
+return html2canvas(cap.firstChild,{scale:2.5,backgroundColor:'#ffffff',useCORS:true,width:1123,height:794,windowWidth:1123});
+}).then(function(cv){
+var pdf=new window.jspdf.jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+pdf.addImage(cv.toDataURL('image/jpeg',0.95),'JPEG',0,0,297,210);
+pdf.save('شهادة تقدير - '+cur.name+'.pdf');
+}).catch(function(){alert('حصلت مشكلة في التحميل، جرّب تاني أو استخدم زر الطباعة واحفظ كـ PDF')}).then(function(){b.disabled=false;b.textContent=old});
+};
+</script>
+</body>
+</html>
